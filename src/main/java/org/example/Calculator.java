@@ -33,6 +33,8 @@ public class Calculator {
     /*These are the buttons that go on the top row*/
     String[] topSymbols = {"AC", "+/-", "%"};
 
+    String[] squareRootSymbol = {"√"};
+
     /*Create a main application window (JFrame)*/
     JFrame frame = new JFrame("Calculator");
     /*Create a label to display numbers and results*/
@@ -104,6 +106,10 @@ public class Calculator {
             else if(Arrays.asList(rightSymbols).contains(buttonValue)) {
                 // Right-side operation buttons: ÷, x, -, +, =
                 button.setBackground(customOrange);
+                button.setForeground(Color.WHITE);
+            }
+            else if (Arrays.asList(squareRootSymbol).contains(buttonValue)) {
+                button.setBackground(customDarkGray);
                 button.setForeground(Color.WHITE);
             }
             else {
@@ -178,6 +184,22 @@ public class Calculator {
                             double numDisplay = Double.parseDouble(displayLabel.getText());
                             numDisplay /= 100; // Convert to percent
                             displayLabel.setText(removeZeroDecimal(numDisplay));
+                        }
+                    }
+                    else if (Arrays.asList(squareRootSymbol).contains(buttonValue)) {
+                        // Get the current number from the display
+                        double numDisplay = Double.parseDouble(displayLabel.getText());
+
+                        // Check if the number is valid (not negative)
+                        if (numDisplay >= 0) {
+                            // Use the built-in Math.sqrt() function to find the square root
+                            double result = Math.sqrt(numDisplay);
+
+                            // Update the display with the result (remove .0 if whole number)
+                            displayLabel.setText(removeZeroDecimal(result));
+                        } else {
+                            // Show an error message if number is negative
+                            displayLabel.setText("Error");
                         }
                     }
                     /* ---------- IF USER PRESSES A NUMBER OR DECIMAL ---------- */
